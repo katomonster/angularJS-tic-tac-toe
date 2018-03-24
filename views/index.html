@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Angular Tic Tac Toe</title>
+	<script src="javascripts/angular.min.js"></script>
+	<script src="javascripts/ticTacToe.js"></script>
+	<link href="stylesheets/styles.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body ng-app="TicTacToeApp">
+	<section class="App" ng-controller="TicTacToeController">
+		<header>{{getCurrentWinnerOrPlayer()}}</header>
+		<article>
+			<ul class="container">
+				<li ng-repeat="val in values track by $index" ng-click="updateSquare($index, $event)">{{val}}</li>
+			</ul>
+		</article>
+		<button ng-click="resetToDefault()">Replay!</button>
+	</section>
+
+</body>
+</html>
