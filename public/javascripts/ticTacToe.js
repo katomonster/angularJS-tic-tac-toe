@@ -62,7 +62,7 @@ app.controller("TicTacToeController", ['$scope', function($scope) {
 		$scope.values = ['', '', '', '', '', '', '', '', ''];
 		$scope.isXcurPlayer = false;
 		$scope.winner = null;
-		document.querySelectorAll('li').forEach(li => {
+		document.querySelectorAll('li.active, li.winner').forEach(li => {
 			li.classList.remove('active', 'winner');
 		});
 	}
