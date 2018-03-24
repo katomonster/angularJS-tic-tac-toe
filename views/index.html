@@ -15,7 +15,10 @@
 				<li ng-repeat="val in values track by $index" ng-click="updateSquare($index, $event)">{{val}}</li>
 			</ul>
 		</article>
-		<button ng-click="resetToDefault()">Replay!</button>
+		<button ng-click="resetToDefault()" ng-show="gameover || winner" class="replay-btn">Replay!</button>
+		<div>
+			<button ng-repeat="hist in history track by $index" ng-show="$index > 0" ng-click="handleHistory($index)">Go back to play #{{$index}}</button>
+		</div>
 	</section>
 
 </body>

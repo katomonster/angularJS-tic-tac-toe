@@ -15,14 +15,19 @@ app.controller("TicTacToeController", ['$scope', function($scope) {
 	$scope.values = ['', '', '', '', '', '', '', '', ''];
 	$scope.isXcurPlayer = false;
 	$scope.winner = null;
+	$scope.history = [];	
+	$scope.gameover = false;
 
 	$scope.updateSquare = function ($index, $event) {
-		if ($event.target.innerText) return;
+		if ($event.target.innerText || $scope.winner) return;
 		const curPlayer = $scope.isXcurPlayer ? 'X' : 'O';
-		$scope.values[$index] = curPlayer;
+		const newValues = $scope.values.slice();
+		newValues[$index] = curPlayer;
+		$scope.values = newValues.slice();
 		$scope.isXcurPlayer = !$scope.isXcurPlayer;
 		$scope.handleActiveClass($event);
 		$scope.getWinner();
+		$scope.addHistory(newValues);
 	};
 
 	$scope.handleActiveClass = function ($event) {
@@ -51,6 +56,10 @@ app.controller("TicTacToeController", ['$scope', function($scope) {
 		if (winningSquares) {
 			winningSquares.map(index => document.querySelectorAll('li')[index].classList.add('winner') );
 		}
+
+		if ($scope.values.indexOf('') === -1) {
+			$scope.gameover = true;
+		}
 	};
 
 	$scope.getCurrentWinnerOrPlayer = function () {
@@ -62,9 +71,24 @@ app.controller("TicTacToeController", ['$scope', function($scope) {
 		$scope.values = ['', '', '', '', '', '', '', '', ''];
 		$scope.isXcurPlayer = false;
 		$scope.winner = null;
+		$scope.history = [];
+		$scope.gameover = false;
+		resetClasses();
+	}
+
+	$scope.addHistory = function (newValues) {
+		const newHistory = $scope.history.concat([newValues]);
+		$scope.history = newHistory.slice();
+	}
+	$scope.handleHistory = function ($index) {
+		$scope.values = $scope.history[$index - 1];
+		$scope.history = $scope.history.slice(0, $index);
+		resetClasses()
+	}
+
+	const resetClasses = () => {
 		document.querySelectorAll('li.active, li.winner').forEach(li => {
 			li.classList.remove('active', 'winner');
 		});
 	}
-
 }]); 
